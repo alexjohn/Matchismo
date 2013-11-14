@@ -51,14 +51,14 @@ static const int COST_TO_CHOSE = 1;
 {
     Card *card = [self cardAtIndex:index];
     
-    if (!card.isMatched) {
-        if (card.isChosen) {
+    if (!card.matched) {
+        if (card.chosen) {
             card.chosen = NO;
         } else {
             // match against other chosen cards
             
             for (Card *otherCard in self.cards) {
-                if (otherCard.isChosen && !otherCard.isMatched) {
+                if (otherCard.chosen && !otherCard.matched) {
                     // @[] match accepts an array of cards. hint hint
                     int matchScore = [card match:@[otherCard]];
                     if (matchScore) {
