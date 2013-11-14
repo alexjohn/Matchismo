@@ -51,6 +51,8 @@
     return [[self rankStrings] count]-1;
 }
 
+// the nsarray leads me to believe the instructor intends for this match to
+// additionally handle matching n cards. the assignment hints indicate otherwise
 - (int)match:(NSArray *)otherCards
 {
     int score = 0;

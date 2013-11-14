@@ -11,7 +11,9 @@
 @interface CardMatchingGame()
 
 @property (nonatomic, readwrite) NSInteger score;
-@property (nonatomic, strong) NSMutableArray *cards;  // of Card
+@property (nonatomic, strong) NSMutableArray *cards;  // of card
+
+@property (nonatomic, strong) NSMutableArray *otherCards;
 
 @end
 
@@ -42,6 +44,12 @@
     return _cards;
 }
 
+- (NSMutableArray *)otherCards
+{
+    if (!_otherCards) _otherCards = [[NSMutableArray alloc] init];
+    return _otherCards;
+}
+
 // could alternatively use the C #define macro
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
@@ -51,30 +59,31 @@ static const int COST_TO_CHOSE = 1;
 {
     Card *card = [self cardAtIndex:index];
     
-    if (!card.matched) {
-        if (card.chosen) {
-            card.chosen = NO;
+    if (!card.isOutOfPlay) {
+        if (card.faceUp) {
+            card.faceUp = NO;
         } else {
-            // match against other chosen cards
-            
+            // match against other faceUp cards
             for (Card *otherCard in self.cards) {
-                if (otherCard.chosen && !otherCard.matched) {
+                if (otherCard.faceUp && !otherCard.isOutOfPlay) {
                     // @[] match accepts an array of cards. hint hint
                     int matchScore = [card match:@[otherCard]];
                     if (matchScore) {
                         self.score += matchScore * MATCH_BONUS;
-                        otherCard.matched = YES;
-                        card.matched = YES;
+                        otherCard.outOfPlay = YES;
+                        card.outOfPlay = YES;
                     } else {
                         self.score -= MISMATCH_PENALTY;
                         // refer to slides 53. this needs to change
-                        otherCard.chosen = NO;
+                        otherCard.faceUp = NO;
                     }
                     break;
+                    // otherCards need to be set to nil
                 }
             }
             self.score -= COST_TO_CHOSE;
-            card.chosen = YES;
+            card.faceUp = YES;
+            // selected cards need to be added to otherCards
         }
     }
 }
