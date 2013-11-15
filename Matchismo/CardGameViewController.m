@@ -51,6 +51,8 @@
     // 0, "Match 2"
     // 1, "Match 1"
     self.game.matchingMode = [sender selectedSegmentIndex];
+    
+    // if all cards face down and score == 0 allow switch
 }
 
 - (void)updateUI
@@ -73,7 +75,7 @@
 
 - (UIImage *)backgroundImageForCard:(Card *)card
 {
-    return [UIImage imageNamed:card.faceUp ? @"cardFront" : @"cardBack"];
+    return [UIImage imageNamed:card.isFaceUp ? @"cardFront" : @"cardBack"];
 }
 
 

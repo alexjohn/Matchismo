@@ -12,12 +12,6 @@
 
 @synthesize suit = _suit;
 
-- (NSString *)contents
-{
-    NSArray *rankStrings = [PlayingCard rankStrings];
-    return [rankStrings[self.rank] stringByAppendingString:self.suit];
-}
-
 - (void)setSuit:(NSString *)suit
 {
     if ([[PlayingCard validSuits] containsObject:suit]) _suit = suit;
@@ -26,6 +20,12 @@
 - (NSString *)suit
 {
     return _suit ? _suit : @"?";
+}
+
+- (NSString *)contents
+{
+    NSArray *rankStrings = [PlayingCard rankStrings];
+    return [rankStrings[self.rank] stringByAppendingString:self.suit];
 }
 
 - (void)setRank:(NSUInteger)rank
@@ -51,21 +51,26 @@
     return [[self rankStrings] count]-1;
 }
 
-// the nsarray leads me to believe the instructor intends for this match to
-// additionally handle matching n cards. the assignment hints indicate otherwise
 - (int)match:(NSArray *)otherCards
 {
     int score = 0;
+  
+    for (PlayingCard *card in otherCards) {
+        if (card.rank == self.rank) {
+            score = 4;
+        } else if ([card.suit isEqualToString:self.suit]) {
+            score = 1;
+        }
+    }
     
-    // refer to slide 61 to update this for the assignment
-    if ([otherCards count] == 1) {
+    /*if ([otherCards count] == 1) {
         PlayingCard *otherCard = [otherCards firstObject];
         if (otherCard.rank == self.rank) {
             score = 4;
         } else if ([otherCard.suit isEqualToString:self.suit]) {
             score = 1;
         }
-    }
+    }*/
     
     return score;
 }

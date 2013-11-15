@@ -12,8 +12,7 @@
 
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray *cards;  // of card
-
-@property (nonatomic, strong) NSMutableArray *otherCards;
+@property (nonatomic, strong) NSMutableArray *flippedCards;
 
 @end
 
@@ -44,10 +43,10 @@
     return _cards;
 }
 
-- (NSMutableArray *)otherCards
+- (NSMutableArray *)flippedCards
 {
-    if (!_otherCards) _otherCards = [[NSMutableArray alloc] init];
-    return _otherCards;
+    if (!_flippedCards) _flippedCards = [[NSMutableArray alloc] init];
+    return _flippedCards;
 }
 
 // could alternatively use the C #define macro
@@ -58,33 +57,35 @@ static const int COST_TO_CHOSE = 1;
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
     Card *card = [self cardAtIndex:index];
-    
+     
     if (!card.isOutOfPlay) {
-        if (card.faceUp) {
-            card.faceUp = NO;
-        } else {
-            // match against other faceUp cards
-            for (Card *otherCard in self.cards) {
-                if (otherCard.faceUp && !otherCard.isOutOfPlay) {
-                    // @[] match accepts an array of cards. hint hint
-                    int matchScore = [card match:@[otherCard]];
-                    if (matchScore) {
-                        self.score += matchScore * MATCH_BONUS;
-                        otherCard.outOfPlay = YES;
+        if (!card.isFaceUp) {
+            if (![self.flippedCards containsObject:card]) {
+                int matchScore = [card match:self.flippedCards];
+                if (matchScore) {
+                    // adjust score
+                    if ([self.flippedCards count] == self.matchingMode + 1) {
+                        for (Card *flipped in self.flippedCards) {
+                            flipped.outOfPlay = YES;
+                        }
+                        [self.flippedCards removeAllObjects];
                         card.outOfPlay = YES;
                     } else {
-                        self.score -= MISMATCH_PENALTY;
-                        // refer to slides 53. this needs to change
-                        otherCard.faceUp = NO;
+                        [self.flippedCards addObject:card];
                     }
-                    break;
-                    // otherCards need to be set to nil
+                } else {
+                    for (Card *flipped in self.flippedCards) {
+                        flipped.faceUp = NO;
+                    }
+                    [self.flippedCards removeAllObjects];
+                    [self.flippedCards addObject:card];
                 }
             }
-            self.score -= COST_TO_CHOSE;
-            card.faceUp = YES;
-            // selected cards need to be added to otherCards
+        } else {
+            [self.flippedCards removeObject:card];
         }
+        card.faceUp = !card.isFaceUp;
+        //adjust score
     }
 }
 
