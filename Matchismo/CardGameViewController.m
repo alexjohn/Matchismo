@@ -78,20 +78,4 @@
     return [UIImage imageNamed:card.isFaceUp ? @"cardFront" : @"cardBack"];
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end
