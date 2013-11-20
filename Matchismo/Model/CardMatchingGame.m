@@ -11,6 +11,7 @@
 @interface CardMatchingGame()
 
 @property (nonatomic, readwrite) NSInteger score;
+@property (nonatomic, readwrite) NSInteger scoreChange;
 @property (nonatomic, strong) NSMutableArray *cards;  // of card
 @property (nonatomic, strong) NSMutableArray *flippedCards;
 
@@ -56,20 +57,22 @@ static const int COST_TO_CHOSE = 1;
 
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
+    self.scoreChange = self.score;
+
     Card *card = [self cardAtIndex:index];
-     
+    
     if (!card.isOutOfPlay) {
         if (!card.isFaceUp) {
             if (![self.flippedCards containsObject:card]) {
                 int matchScore = [card match:self.flippedCards];
                 if (matchScore) {
-                    // adjust score
+                    self.score += matchScore;
                     if ([self.flippedCards count] == self.matchingMode + 1) {
                         for (Card *flipped in self.flippedCards) {
-                            flipped.outOfPlay = YES;
+                            flipped.matched = YES;
                         }
                         [self.flippedCards removeAllObjects];
-                        card.outOfPlay = YES;
+                        card.matched = YES;
                     } else {
                         [self.flippedCards addObject:card];
                     }
@@ -85,8 +88,10 @@ static const int COST_TO_CHOSE = 1;
             [self.flippedCards removeObject:card];
         }
         card.faceUp = !card.isFaceUp;
-        //adjust score
+        self.score -= COST_TO_CHOSE;
     }
+    
+    self.scoreChange = self.scoreChange - self.score;
 }
 
 - (Card *)cardAtIndex:(NSUInteger)index

@@ -13,7 +13,7 @@
 @property (strong, nonatomic) NSString *contents;
 
 @property (nonatomic, getter = isFaceUp) BOOL faceUp;
-@property (nonatomic, getter = isOutOfPlay) BOOL outOfPlay;
+@property (nonatomic, getter = isOutOfPlay) BOOL matched;
 
 - (int)match:(NSArray *)otherCards;
 

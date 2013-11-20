@@ -13,6 +13,7 @@
 @interface CardMatchingGame : NSObject
 
 @property (nonatomic, readonly) NSInteger score;
+@property (nonatomic, readonly) NSInteger scoreChange;
 @property (nonatomic) NSUInteger matchingMode;
 
 // designated initializer

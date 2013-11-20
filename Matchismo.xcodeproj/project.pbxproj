@@ -97,10 +97,10 @@
 		099FA5B7182AFCFC00C96E02 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				09E85FD318369E62009A2BED /* CardMatchingGame.h */,
-				09E85FD418369E62009A2BED /* CardMatchingGame.m */,
 				099FA5B4182AFCB300C96E02 /* Card.h */,
 				099FA5B5182AFCB300C96E02 /* Card.m */,
+				09E85FD318369E62009A2BED /* CardMatchingGame.h */,
+				09E85FD418369E62009A2BED /* CardMatchingGame.m */,
 				099FA5BB182BEBE000C96E02 /* Deck.h */,
 				099FA5BC182BEBE000C96E02 /* Deck.m */,
 				099FA5B8182AFE9400C96E02 /* PlayingCard.h */,

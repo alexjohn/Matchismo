@@ -17,6 +17,9 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
+// this solution is only ok
+@property (weak, nonatomic) UISegmentedControl *matchModeSC;
+
 @end
 
 @implementation CardGameViewController
@@ -35,6 +38,10 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
+    if (self.matchModeSC.enabled) {
+        self.matchModeSC.enabled = NO;
+    }
+
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
@@ -42,17 +49,10 @@
 
 - (IBAction)dealButton
 {
+    self.matchModeSC.enabled = YES;
+
     self.game = nil;
     [self updateUI];
-}
-
-- (IBAction)matchModeSegmentedControl:(UISegmentedControl *)sender
-{
-    // 0, "Match 2"
-    // 1, "Match 1"
-    self.game.matchingMode = [sender selectedSegmentIndex];
-    
-    // if all cards face down and score == 0 allow switch
 }
 
 - (void)updateUI
@@ -66,6 +66,13 @@
         cardButton.enabled = !card.isOutOfPlay;
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
     }
+
+}
+
+- (IBAction)matchModeSegmentedControl:(UISegmentedControl *)sender
+{
+    self.matchModeSC = sender;
+    self.game.matchingMode = [sender selectedSegmentIndex];
 }
 
 - (NSString *)titleForCard:(Card *)card
