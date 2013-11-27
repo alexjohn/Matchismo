@@ -91,7 +91,7 @@ static const int COST_TO_CHOSE = 1;
         self.score -= COST_TO_CHOSE;
     }
     
-    self.scoreChange = self.scoreChange - self.score;
+    self.scoreChange = self.score - self.scoreChange;
 }
 
 - (Card *)cardAtIndex:(NSUInteger)index
