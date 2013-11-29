@@ -57,12 +57,10 @@ static const int COST_TO_CHOSE = 1;
 
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
-    self.scoreChange = self.score;
-
     Card *card = [self cardAtIndex:index];
     
-    if (!card.isOutOfPlay) {
-        if (!card.isFaceUp) {
+    if (!card.isMatched) {
+        if (!card.isSelected) {
             if (![self.flippedCards containsObject:card]) {
                 int matchScore = [card match:self.flippedCards];
                 if (matchScore) {
@@ -78,7 +76,7 @@ static const int COST_TO_CHOSE = 1;
                     }
                 } else {
                     for (Card *flipped in self.flippedCards) {
-                        flipped.faceUp = NO;
+                        flipped.selected = NO;
                     }
                     [self.flippedCards removeAllObjects];
                     [self.flippedCards addObject:card];
@@ -87,11 +85,9 @@ static const int COST_TO_CHOSE = 1;
         } else {
             [self.flippedCards removeObject:card];
         }
-        card.faceUp = !card.isFaceUp;
+        card.selected = !card.isSelected;
         self.score -= COST_TO_CHOSE;
     }
-    
-    self.scoreChange = self.score - self.scoreChange;
 }
 
 - (Card *)cardAtIndex:(NSUInteger)index

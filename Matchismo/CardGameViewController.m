@@ -19,9 +19,6 @@
 // this solution is ok, better solved when we build View in code
 @property (weak, nonatomic) UISegmentedControl *matchModeSC;
 
-// actionlabel
-@property (strong, nonatomic) NSMutableArray *selectedCardButtons;
-
 @end
 
 @implementation CardGameViewController
@@ -38,12 +35,6 @@
     return [[PlayingCardDeck alloc] init];
 }
 
-- (NSMutableArray *)selectedCardButtons
-{
-    if (!_selectedCardButtons) _selectedCardButtons = [[NSMutableArray alloc] init];
-    return _selectedCardButtons;
-}
-
 - (IBAction)touchCardButton:(UIButton *)sender
 {
     if (self.matchModeSC.enabled) {
@@ -53,54 +44,6 @@
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
-    
-    [self describeResultsOfPressingCard:sender];
-}
-
-- (void)describeResultsOfPressingCard:(UIButton *)cardButton
-{
-    // i bet i could integrate this logic into updateUI, where isSlected is scanned
-    //  and matched are scanned
-    NSString *buttonTitle = [[NSString alloc] initWithString:cardButton.currentTitle];
-    NSUInteger titleIndex = 0;
-    BOOL containsTitle = NO;
-    
-    for (; titleIndex < [self.selectedCardButtons count]; ++titleIndex) {
-        if ([self.selectedCardButtons[titleIndex] isEqualToString:buttonTitle]) {
-            containsTitle = YES;
-            break;
-        }
-    }
-    
-    if (containsTitle) {
-        [self.selectedCardButtons removeObjectAtIndex:titleIndex];
-    } else {
-        [self.selectedCardButtons addObject:buttonTitle];
-    }
-    
-    // this is pretty sloppy
-    // also, score change should be in the controller not model
-    if (self.game.scoreChange >= 0) {
-        NSLog(@"matched: ");
-        for (NSString *buttonTitle in self.selectedCardButtons) {
-            NSLog(@"%@, ", buttonTitle);
-        }
-        [self.selectedCardButtons removeAllObjects];
-    } else if (self.game.scoreChange < 0) {
-        if ([self.selectedCardButtons count] == self.game.matchingMode + 2) {
-            for (NSString *buttonTitle in self.selectedCardButtons) {
-                NSLog(@"%@, ", buttonTitle);
-            }
-            NSLog(@"do not match");
-            [self.selectedCardButtons removeAllObjects];
-            [self.selectedCardButtons addObject:buttonTitle];
-        } else {
-            NSLog(@"selected: ");
-            for (NSString *buttonTitle in self.selectedCardButtons) {
-                NSLog(@"%@, ", buttonTitle);
-            }
-        }
-    }
 }
 
 - (IBAction)dealButton
@@ -109,21 +52,6 @@
 
     self.game = nil;
     [self updateUI];
-    
-    self.selectedCardButtons = nil;
-}
-
-- (void)updateUI
-{
-    for (UIButton *cardButton in self.cardButtons) {
-        int cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-        Card *card = [self.game cardAtIndex:cardButtonIndex];
-        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[self backgroundImageForCard:card]
-                              forState:UIControlStateNormal];
-        cardButton.enabled = !card.isOutOfPlay;
-        self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
-    }
 }
 
 - (IBAction)matchModeSegmentedControl:(UISegmentedControl *)sender
@@ -132,14 +60,37 @@
     self.game.matchingMode = [sender selectedSegmentIndex];
 }
 
+- (void)updateUI
+{
+    NSLog(@"*** break ***");
+    
+    for (UIButton *cardButton in self.cardButtons) {
+        int cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
+        Card *card = [self.game cardAtIndex:cardButtonIndex];
+        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+        [cardButton setBackgroundImage:[self backgroundImageForCard:card]
+                              forState:UIControlStateNormal];
+        
+        if (card.isMatched && cardButton.enabled) {
+            NSLog(@"matched %@", [card contents]);
+        } else if (card.isSelected && cardButton.enabled) {
+            NSLog(@"selected %@", [card contents]);
+        }
+        
+        cardButton.enabled = !card.isMatched;
+    }
+    // update some label
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+}
+
 - (NSString *)titleForCard:(Card *)card
 {
-    return card.faceUp ? card.contents : @"";
+    return card.selected ? card.contents : @"";
 }
 
 - (UIImage *)backgroundImageForCard:(Card *)card
 {
-    return [UIImage imageNamed:card.isFaceUp ? @"cardFront" : @"cardBack"];
+    return [UIImage imageNamed:card.isSelected ? @"cardFront" : @"cardBack"];
 }
 
 @end
