@@ -15,9 +15,10 @@
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *actionLabel;
 
 // this solution is ok, better solved when we build View in code
-@property (weak, nonatomic) UISegmentedControl *matchModeSC;
+@property (weak, nonatomic) UISegmentedControl *numCardsToMatchSegCon;
 
 @end
 
@@ -37,8 +38,8 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    if (self.matchModeSC.enabled) {
-        self.matchModeSC.enabled = NO;
+    if (self.numCardsToMatchSegCon.enabled) {
+        self.numCardsToMatchSegCon.enabled = NO;
     }
     
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
@@ -48,7 +49,7 @@
 
 - (IBAction)dealButton
 {
-    self.matchModeSC.enabled = YES;
+    self.numCardsToMatchSegCon.enabled = YES;
 
     self.game = nil;
     [self updateUI];
@@ -56,13 +57,13 @@
 
 - (IBAction)matchModeSegmentedControl:(UISegmentedControl *)sender
 {
-    self.matchModeSC = sender;
-    self.game.matchingMode = [sender selectedSegmentIndex];
+    self.numCardsToMatchSegCon = sender;
+    self.game.numCardsToMatch = [sender selectedSegmentIndex];
 }
 
 - (void)updateUI
 {
-    NSLog(@"*** break ***");
+    NSMutableString *action = [[NSMutableString alloc] init];
     
     for (UIButton *cardButton in self.cardButtons) {
         int cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
@@ -71,15 +72,27 @@
         [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                               forState:UIControlStateNormal];
         
-        if (card.isMatched && cardButton.enabled) {
-            NSLog(@"matched %@", [card contents]);
-        } else if (card.isSelected && cardButton.enabled) {
-            NSLog(@"selected %@", [card contents]);
+        if (cardButton.enabled) {
+            if (card.isMatched) {
+                [action appendFormat:@"m%@", [card contents]];
+            } else if (card.isSelected) {
+                [action appendFormat:@"s%@", [card contents]];
+            }
         }
         
         cardButton.enabled = !card.isMatched;
     }
-    // update some label
+
+    /* crashes, don't care to fix atm
+    if ([action characterAtIndex:0] == 'm') {
+        self.actionLabel.text = [[NSString alloc] initWithFormat:@"Matched%@", [action stringByReplacingOccurrencesOfString:@"m"
+                                                                                                                 withString:@", "]];
+    } else if ([action characterAtIndex:0] == 's') {
+        self.actionLabel.text = [[NSString alloc] initWithFormat:@"Selected%@", [action stringByReplacingOccurrencesOfString:@"s"
+                                                                                                                  withString:@", "]];
+    }*/
+    
+    self.actionLabel.text = action;
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 }
 
