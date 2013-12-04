@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		095DD113184F985B00959721 /* PlayingCardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 095DD112184F985B00959721 /* PlayingCardGameViewController.m */; };
 		099FA5B6182AFCB300C96E02 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 099FA5B5182AFCB300C96E02 /* Card.m */; };
 		099FA5BA182AFE9400C96E02 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 099FA5B9182AFE9400C96E02 /* PlayingCard.m */; };
 		099FA5BD182BEBE000C96E02 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 099FA5BC182BEBE000C96E02 /* Deck.m */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		095DD111184F985B00959721 /* PlayingCardGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingCardGameViewController.h; sourceTree = "<group>"; };
+		095DD112184F985B00959721 /* PlayingCardGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingCardGameViewController.m; sourceTree = "<group>"; };
 		099FA5B4182AFCB300C96E02 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Card.h; path = Model/Card.h; sourceTree = "<group>"; };
 		099FA5B5182AFCB300C96E02 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Card.m; path = Model/Card.m; sourceTree = "<group>"; };
 		099FA5B8182AFE9400C96E02 /* PlayingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCard.h; path = Model/PlayingCard.h; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 			children = (
 				09ED5C5F182ABD360060BF8D /* CardGameViewController.h */,
 				09ED5C60182ABD360060BF8D /* CardGameViewController.m */,
+				095DD111184F985B00959721 /* PlayingCardGameViewController.h */,
+				095DD112184F985B00959721 /* PlayingCardGameViewController.m */,
 				09ED5C5C182ABD360060BF8D /* Main.storyboard */,
 				099FA5B7182AFCFC00C96E02 /* Model */,
 				09ED5C62182ABD360060BF8D /* Images.xcassets */,
@@ -291,6 +296,7 @@
 				099FA5C0182BF0E300C96E02 /* PlayingCardDeck.m in Sources */,
 				099FA5BD182BEBE000C96E02 /* Deck.m in Sources */,
 				099FA5B6182AFCB300C96E02 /* Card.m in Sources */,
+				095DD113184F985B00959721 /* PlayingCardGameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

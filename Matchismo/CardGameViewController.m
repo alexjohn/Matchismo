@@ -8,7 +8,6 @@
 
 #import "CardGameViewController.h"
 #import "CardMatchingGame.h"
-#import "PlayingCardDeck.h"
 
 @interface CardGameViewController ()
 
@@ -17,8 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *actionLabel;
 
-// this solution is ok, better solved when we build View in code
-@property (weak, nonatomic) UISegmentedControl *numCardsToMatchSegCon;
+// this solution isn't great
+@property (weak, nonatomic) UISegmentedControl *numCardsToMatchSegmentedControl;
 
 @end
 
@@ -31,15 +30,25 @@
     return _game;
 }
 
+// abstract, only useful as a super class
 - (Deck *)createDeck
 {
-    return [[PlayingCardDeck alloc] init];
+    return nil;
 }
+
+/*- (void)viewDidLoad/viewWillAppear?
+ * the view is not set to nil ever, the game is
+ * so i think viewDidLoad is the appropriate choice
+{
+    [super viewDidLoad];
+    // this won't work, but I'm getting closer to a solution
+    // [self matchModeSegmentedControl:[self numCardsToMatchSegmentedControl]];
+}*/
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    if (self.numCardsToMatchSegCon.enabled) {
-        self.numCardsToMatchSegCon.enabled = NO;
+    if (self.numCardsToMatchSegmentedControl.enabled) {
+        self.numCardsToMatchSegmentedControl.enabled = NO;
     }
     
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
@@ -49,7 +58,7 @@
 
 - (IBAction)dealButton
 {
-    self.numCardsToMatchSegCon.enabled = YES;
+    self.numCardsToMatchSegmentedControl.enabled = YES;
 
     self.game = nil;
     [self updateUI];
@@ -57,7 +66,7 @@
 
 - (IBAction)matchModeSegmentedControl:(UISegmentedControl *)sender
 {
-    self.numCardsToMatchSegCon = sender;
+    self.numCardsToMatchSegmentedControl = sender;
     self.game.numCardsToMatch = [sender selectedSegmentIndex];
 }
 
