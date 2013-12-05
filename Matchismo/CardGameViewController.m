@@ -7,18 +7,13 @@
 //
 
 #import "CardGameViewController.h"
-#import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
-
-@property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *actionLabel;
-
 // this solution isn't great
-@property (weak, nonatomic) UISegmentedControl *numCardsToMatchSegmentedControl;
-
+// @property (weak, nonatomic) UISegmentedControl *numCardsToMatchSegmentedControl;
 @end
 
 @implementation CardGameViewController
@@ -47,9 +42,9 @@
 
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    if (self.numCardsToMatchSegmentedControl.enabled) {
+    /*if (self.numCardsToMatchSegmentedControl.enabled) {
         self.numCardsToMatchSegmentedControl.enabled = NO;
-    }
+    }*/
     
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
@@ -58,17 +53,17 @@
 
 - (IBAction)dealButton
 {
-    self.numCardsToMatchSegmentedControl.enabled = YES;
+    // self.numCardsToMatchSegmentedControl.enabled = YES;
 
     self.game = nil;
     [self updateUI];
 }
 
-- (IBAction)matchModeSegmentedControl:(UISegmentedControl *)sender
+/*- (IBAction)matchModeSegmentedControl:(UISegmentedControl *)sender
 {
     self.numCardsToMatchSegmentedControl = sender;
     self.game.numCardsToMatch = [sender selectedSegmentIndex];
-}
+}*/
 
 - (void)updateUI
 {
@@ -94,11 +89,13 @@
 
     /* crashes, don't care to fix atm
     if ([action characterAtIndex:0] == 'm') {
-        self.actionLabel.text = [[NSString alloc] initWithFormat:@"Matched%@", [action stringByReplacingOccurrencesOfString:@"m"
-                                                                                                                 withString:@", "]];
+        self.actionLabel.text =
+        [[NSString alloc] initWithFormat:@"Matched%@",
+         [action stringByReplacingOccurrencesOfString:@"m" withString:@", "]];
     } else if ([action characterAtIndex:0] == 's') {
-        self.actionLabel.text = [[NSString alloc] initWithFormat:@"Selected%@", [action stringByReplacingOccurrencesOfString:@"s"
-                                                                                                                  withString:@", "]];
+        self.actionLabel.text =
+        [[NSString alloc] initWithFormat:@"Selected%@",
+         [action stringByReplacingOccurrencesOfString:@"s" withString:@", "]];
     }*/
     
     self.actionLabel.text = action;
