@@ -11,7 +11,6 @@
 @interface CardGameViewController ()
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *actionLabel;
 // this solution isn't great
 // @property (weak, nonatomic) UISegmentedControl *numCardsToMatchSegmentedControl;
 @end

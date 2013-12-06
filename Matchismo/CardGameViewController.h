@@ -14,7 +14,9 @@
 @interface CardGameViewController : UIViewController
 
 @property (strong, nonatomic) CardMatchingGame *game;
+@property (weak, nonatomic) IBOutlet UILabel *actionLabel;
 
 - (Deck *)createDeck;  // abstract
+- (IBAction)dealButton;
 
 @end

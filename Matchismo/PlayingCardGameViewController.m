@@ -20,6 +20,12 @@
     return [[PlayingCardDeck alloc] init];
 }
 
+- (IBAction)dealButton
+{
+    [super dealButton];
+    self.actionLabel.text = @"Matchismo: Card Matching";
+}
+
 /* the playing card matching currently works because 
  * numCardsToMatch is automatically set to 0 when created
  * and this is the number we want for 2 card matching.
