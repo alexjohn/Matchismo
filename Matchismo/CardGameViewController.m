@@ -9,13 +9,17 @@
 #import "CardGameViewController.h"
 
 @interface CardGameViewController ()
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-// this solution isn't great
-// @property (weak, nonatomic) UISegmentedControl *numCardsToMatchSegmentedControl;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @end
 
 @implementation CardGameViewController
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self updateUI];
+}
 
 - (CardMatchingGame *)game
 {
@@ -24,27 +28,13 @@
     return _game;
 }
 
-// abstract, only useful as a super class
 - (Deck *)createDeck
 {
     return nil;
 }
 
-/*- (void)viewDidLoad/viewWillAppear?
- * the view is not set to nil ever, the game is
- * so i think viewDidLoad is the appropriate choice
-{
-    [super viewDidLoad];
-    // this won't work, but I'm getting closer to a solution
-    // [self matchModeSegmentedControl:[self numCardsToMatchSegmentedControl]];
-}*/
-
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    /*if (self.numCardsToMatchSegmentedControl.enabled) {
-        self.numCardsToMatchSegmentedControl.enabled = NO;
-    }*/
-    
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
     [self updateUI];
@@ -52,17 +42,9 @@
 
 - (IBAction)dealButton
 {
-    // self.numCardsToMatchSegmentedControl.enabled = YES;
-
     self.game = nil;
     [self updateUI];
 }
-
-/*- (IBAction)matchModeSegmentedControl:(UISegmentedControl *)sender
-{
-    self.numCardsToMatchSegmentedControl = sender;
-    self.game.numCardsToMatch = [sender selectedSegmentIndex];
-}*/
 
 - (void)updateUI
 {
@@ -86,18 +68,7 @@
         cardButton.enabled = !card.isMatched;
     }
 
-    /* crashes, don't care to fix atm
-    if ([action characterAtIndex:0] == 'm') {
-        self.actionLabel.text =
-        [[NSString alloc] initWithFormat:@"Matched%@",
-         [action stringByReplacingOccurrencesOfString:@"m" withString:@", "]];
-    } else if ([action characterAtIndex:0] == 's') {
-        self.actionLabel.text =
-        [[NSString alloc] initWithFormat:@"Selected%@",
-         [action stringByReplacingOccurrencesOfString:@"s" withString:@", "]];
-    }*/
-    
-    self.actionLabel.text = action;
+    if ([action length]) self.actionLabel.text = action;
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 }
 

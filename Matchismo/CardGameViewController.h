@@ -5,7 +5,10 @@
 //  Created by Alex John on 11/6/13.
 //  Copyright (c) 2013 TwoDesks. All rights reserved.
 //
-//  Abstract class. Must implement methods as described below.
+//  Abstract class. Must implement methods as described
+//
+//  How could I keep the current functionality while keeping
+//  game, actionLabel and dealButton private?
 
 #import <UIKit/UIKit.h>
 #import "CardMatchingGame.h"

@@ -15,6 +15,12 @@
 
 @implementation PlayingCardGameViewController
 
+-(void)viewDidLoad
+{
+    // 0 for 2 card matching, 1 for 3 etc.
+    self.game.numCardsToMatch = 0;
+}
+
 - (Deck *)createDeck
 {
     return [[PlayingCardDeck alloc] init];
@@ -25,13 +31,5 @@
     [super dealButton];
     self.actionLabel.text = @"Matchismo: Card Matching";
 }
-
-/* the playing card matching currently works because 
- * numCardsToMatch is automatically set to 0 when created
- * and this is the number we want for 2 card matching.
- * when the Set game is implemented there will need to 
- * be some line some where setting nCTM to 1.
- * maybe in the setter?
- */
 
 @end

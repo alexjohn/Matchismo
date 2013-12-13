@@ -63,7 +63,7 @@ static const int COST_TO_CHOSE = 1;
             if (![self.flippedCards containsObject:card]) {
                 int matchScore = [card match:self.flippedCards];
                 if (matchScore) {
-                    self.score += matchScore;
+                    self.score += matchScore * MATCH_BONUS;
                     if ([self.flippedCards count] == self.numCardsToMatch + 1) {
                         for (Card *flipped in self.flippedCards) {
                             flipped.matched = YES;
@@ -74,6 +74,7 @@ static const int COST_TO_CHOSE = 1;
                         [self.flippedCards addObject:card];
                     }
                 } else {
+                    // self.score -= MISMATCH_PENALTY; where does this go?
                     for (Card *flipped in self.flippedCards) {
                         flipped.selected = NO;
                     }
