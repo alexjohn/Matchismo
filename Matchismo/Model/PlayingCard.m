@@ -51,21 +51,23 @@
     return [[self rankStrings] count]-1;
 }
 
-- (int)match:(NSArray *)otherCards
++ (NSInteger)alexMatch:(NSArray *)otherCards
 {
-    int score = 0;
-  
-    for (id obj in otherCards) {
-        if ([obj isKindOfClass:[PlayingCard class]]) {
-            PlayingCard *card = (PlayingCard *)obj;
-            if (card.rank == self.rank) {
-                score += 4;
-            } else if ([card.suit isEqualToString:self.suit]) {
-                score += 1;
+    NSInteger score = 0;
+    
+    for (PlayingCard *card in otherCards) {
+        for (PlayingCard *otherCard in otherCards) {
+            if (card != otherCard) {
+                // NSLog(@"%@\n%@", card, otherCard);
+                if (card.rank == otherCard.rank) {
+                    score += 4;
+                } else if ([card.suit isEqualToString:otherCard.suit]) {
+                    score += 1;
+                }
             }
         }
     }
-    
+
     return score;
 }
 

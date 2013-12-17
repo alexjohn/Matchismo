@@ -10,13 +10,18 @@
 
 @implementation Card
 
-- (int)match:(NSArray *)otherCards
++ (int)match:(NSArray *)otherCards
 {
-    int score = 0;
+    NSInteger score = 0;
     
     for (Card *card in otherCards) {
-        if ([card.contents isEqualToString:self.contents]) {
-            score = 1;
+        for (Card *otherCard in otherCards) {
+            if (card != otherCard) {
+                // NSLog(@"%@\n%@", card, otherCard);
+                if ([card.contents isEqualToString:otherCard.contents]) {
+                    score += 1;
+                }
+            }
         }
     }
     

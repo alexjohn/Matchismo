@@ -93,12 +93,22 @@
     return tmp;
 }
 
-- (int)match:(NSArray *)otherCards
++ (NSInteger)alexMatch:(NSArray *)otherCards
 {
-    // ...
-    return 0;
+    NSInteger score = 1;
+    
+    for (SetCard *card in otherCards) {
+        for (SetCard *otherCard in otherCards) {
+            if (card != otherCard) {
+                // NSLog(@"%@\n%@", card, otherCard);
+                // this is going to be impossible to test until the set cards are displayed properly
+                ;
+            }
+        }
+    }
+    
+    return score;
 }
-
 
 
 

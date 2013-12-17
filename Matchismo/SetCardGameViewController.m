@@ -9,16 +9,11 @@
 #import "SetCardGameViewController.h"
 #import "SetCardDeck.h"
 
-@interface SetCardGameViewController ()
-
-@end
-
 @implementation SetCardGameViewController
 
 -(void)viewDidLoad
 {
-    // 0 for 2 card matching, 1 for 3 etc.
-    self.game.numCardsToMatch = 1;
+    self.game.numCardsToMatch = 3;
 }
 
 - (Deck *)createDeck
