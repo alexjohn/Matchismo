@@ -13,6 +13,7 @@
 
 -(void)viewDidLoad
 {
+    [super viewDidLoad];
     self.game.numCardsToMatch = 2;
 }
 

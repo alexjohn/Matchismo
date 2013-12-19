@@ -7,13 +7,21 @@
 //
 
 #import "SetCardGameViewController.h"
+#import "SetCard.h"
 #import "SetCardDeck.h"
 
 @implementation SetCardGameViewController
 
 -(void)viewDidLoad
 {
+    [super viewDidLoad];
     self.game.numCardsToMatch = 3;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self updateUI];
 }
 
 - (Deck *)createDeck
@@ -25,6 +33,22 @@
 {
     [super dealButton];
     self.actionLabel.text = @"Matchismo: Set";
+}
+
+- (void)updateUI
+{
+    [super updateUI];
+    
+    for (UIButton *cardButton in self.cardButtons) {
+        // it would be awesome if this logic could be moved to titleForCard
+        NSInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
+        SetCard *card = (SetCard *)[self.game cardAtIndex:cardButtonIndex];
+        
+        NSMutableAttributedString *buttonText = [cardButton.titleLabel.attributedText mutableCopy];
+        [buttonText addAttributes:@{ NSForegroundColorAttributeName : card.color }
+                            range:NSMakeRange(0, [buttonText.string length])];
+        cardButton.titleLabel.attributedText = buttonText;
+    }
 }
 
 - (NSString *)titleForCard:(Card *)card

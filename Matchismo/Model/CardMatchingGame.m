@@ -78,13 +78,13 @@ static const int COST_TO_CHOSE = 1;
             self.score -= MISMATCH_PENALTY;
             
             // this is messy, but better than the nested ifs used previously
-            Card *recentlySelected = [self.flippedCards firstObject];
+            Card *mostRecentlySelected = [self.flippedCards firstObject];
             for (Card *flipped in self.flippedCards) {
                 flipped.selected = NO;
             }
             [self.flippedCards removeAllObjects];
-            recentlySelected.selected = YES;
-            [self.flippedCards addObject:recentlySelected];
+            mostRecentlySelected.selected = YES;
+            [self.flippedCards addObject:mostRecentlySelected];
         }
     }
 }
