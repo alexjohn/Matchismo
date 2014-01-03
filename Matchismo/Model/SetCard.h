@@ -11,10 +11,7 @@
 @interface SetCard : Card
 
 // three lightly shaded red circles
-@property (nonatomic) NSUInteger numberOfSymbols;
-@property (strong, nonatomic) NSString *shade;
-@property (strong, nonatomic) UIColor *color;
-@property (strong, nonatomic) NSString *symbol;
+@property (strong, nonatomic) NSDictionary *attributes;
 
 + (NSUInteger)maxNumberOfSymbols;
 + (NSArray *)validShades;

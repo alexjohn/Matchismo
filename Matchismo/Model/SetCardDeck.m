@@ -22,10 +22,10 @@
                     for (NSString *symbol in [SetCard validSymbols]) {
                         // that's deep son
                         SetCard *card = [[SetCard alloc] init];
-                        card.numberOfSymbols = number;
-                        card.shade = shade;
-                        card.color = color;
-                        card.symbol = symbol;
+                        
+                        NSDictionary *attributes = [[NSDictionary alloc] initWithObjects:@[[NSNumber numberWithInteger:number], shade, color, symbol]
+                                                                                 forKeys:@[@"numberOfSymbols", @"shade", @"color", @"symbol"]];
+                        card.attributes = attributes;
                         [self addCard:card];
                     }
                 }

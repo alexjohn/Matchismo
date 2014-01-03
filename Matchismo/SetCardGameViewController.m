@@ -44,8 +44,10 @@
         NSInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
         SetCard *card = (SetCard *)[self.game cardAtIndex:cardButtonIndex];
         
+        UIColor *color = [card.attributes objectForKey:@"color"];
+        // NSLog(@"%@", color.description);
         NSMutableAttributedString *buttonText = [cardButton.titleLabel.attributedText mutableCopy];
-        [buttonText addAttributes:@{ NSForegroundColorAttributeName : card.color }
+        [buttonText addAttributes:@{ NSForegroundColorAttributeName : color }
                             range:NSMakeRange(0, [buttonText.string length])];
         cardButton.titleLabel.attributedText = buttonText;
     }
