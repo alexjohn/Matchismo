@@ -27,7 +27,7 @@
 
 + (NSArray *)validShades
 {
-    return @[@"no shading", @"light shading", @"dark shading"];
+    return @[@"no shade", @"light shade", @"dark shade"];
 }
 
 + (NSArray *)validColors

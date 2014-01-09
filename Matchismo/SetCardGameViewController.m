@@ -41,13 +41,16 @@
     
     for (UIButton *cardButton in self.cardButtons) {
         // it would be awesome if this logic could be moved to titleForCard
+        // i forget why I thought this. also, it seems possible to accomplish. i think?
         NSInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
         SetCard *card = (SetCard *)[self.game cardAtIndex:cardButtonIndex];
         
         UIColor *color = [card.attributes objectForKey:@"color"];
-        // NSLog(@"%@", color.description);
+        UIColor *shade = [self shadeForCard:card];
+
         NSMutableAttributedString *buttonText = [cardButton.titleLabel.attributedText mutableCopy];
-        [buttonText addAttributes:@{ NSForegroundColorAttributeName : color }
+        [buttonText addAttributes:@{ NSForegroundColorAttributeName : color,
+                                     NSBackgroundColorAttributeName : shade }
                             range:NSMakeRange(0, [buttonText.string length])];
         cardButton.titleLabel.attributedText = buttonText;
     }
@@ -62,6 +65,22 @@
 - (UIImage *)backgroundImageForCard:(Card *)card
 {
     return [UIImage imageNamed:@"cardFront"];
+}
+
+- (UIColor *)shadeForCard:(SetCard *)card
+{
+    UIColor *color = [card.attributes objectForKey:@"color"];
+    NSString *shade = [card.attributes objectForKey:@"shade"];
+    
+    if ([shade isEqualToString:@"no shade"]) {
+        color = [color colorWithAlphaComponent:0.0];
+    } else if ([shade isEqualToString:@"light shade"]) {
+        color = [color colorWithAlphaComponent:0.1];
+    } else {
+        color = [color colorWithAlphaComponent:0.3];
+    }
+    
+    return  color;
 }
 
 @end
