@@ -67,7 +67,7 @@ static const int COST_TO_CHOSE = 1;
     self.score -= COST_TO_CHOSE;
     
     if ([self.flippedCards count] == self.numCardsToMatch) {
-        NSInteger matchScore = [[[self.flippedCards firstObject] class] match:self.flippedCards];
+        NSInteger matchScore = [[self.flippedCards firstObject] match:self.flippedCards];
         if (matchScore) {
             self.score += matchScore * MATCH_BONUS;
             for (Card *flipped in self.flippedCards) {

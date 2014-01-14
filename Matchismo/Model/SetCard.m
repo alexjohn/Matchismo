@@ -53,7 +53,7 @@
     return tmp;
 }
 
-+ (NSInteger)match:(NSArray *)otherCards
+- (NSInteger)match:(NSArray *)otherCards
 {
     NSInteger score = 1;
     

@@ -11,9 +11,9 @@
 
 @implementation PlayingCardGameViewController
 
--(void)viewDidLoad
+- (void)viewDidLoad
 {
-    [super viewDidLoad];
+    // where should this line go so that it's not duplicated?
     self.game.numCardsToMatch = 2;
 }
 
@@ -26,6 +26,7 @@
 {
     [super dealButton];
     self.actionLabel.text = @"Matchismo: Card Matching";
+    self.game.numCardsToMatch = 2;
 }
 
 @end

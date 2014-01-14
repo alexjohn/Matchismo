@@ -51,7 +51,7 @@
     return [[self rankStrings] count]-1;
 }
 
-+ (NSInteger)match:(NSArray *)otherCards
+- (NSInteger)match:(NSArray *)otherCards
 {
     NSInteger score = 0;
     

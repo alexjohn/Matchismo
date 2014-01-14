@@ -12,9 +12,9 @@
 
 @implementation SetCardGameViewController
 
--(void)viewDidLoad
+- (void)viewDidLoad
 {
-    [super viewDidLoad];
+    // where should this line go so that it's not duplicated?
     self.game.numCardsToMatch = 3;
 }
 
@@ -33,6 +33,7 @@
 {
     [super dealButton];
     self.actionLabel.text = @"Matchismo: Set";
+    self.game.numCardsToMatch = 3;
 }
 
 - (void)updateUI
