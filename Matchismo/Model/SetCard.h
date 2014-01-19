@@ -10,7 +10,6 @@
 
 @interface SetCard : Card
 
-// three lightly shaded red circles
 @property (strong, nonatomic) NSDictionary *attributes;
 
 + (NSUInteger)maxNumberOfSymbols;

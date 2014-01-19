@@ -30,6 +30,7 @@
                 break;
             }
         }
+        // self.numCardsToMatch = ??
     }
     
     return self;

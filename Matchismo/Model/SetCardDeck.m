@@ -20,7 +20,7 @@
             for (NSString *shade in [SetCard validShades]) {
                 for (UIColor *color in [SetCard validColors]) {
                     for (NSString *symbol in [SetCard validSymbols]) {
-                        // that's deep son
+                        // that's deep, son
                         SetCard *card = [[SetCard alloc] init];
                         
                         NSDictionary *attributes = [[NSDictionary alloc] initWithObjects:@[[NSNumber numberWithInteger:number], shade, color, symbol]

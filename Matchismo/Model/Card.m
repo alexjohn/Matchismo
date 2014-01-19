@@ -14,6 +14,7 @@
 {
     NSInteger score = 0;
     
+    // matches n cards
     for (Card *card in otherCards) {
         for (Card *otherCard in otherCards) {
             if (card != otherCard) {

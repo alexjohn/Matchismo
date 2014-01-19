@@ -14,6 +14,7 @@
 - (void)viewDidLoad
 {
     // where should this line go so that it's not duplicated?
+    // should it even be in the VC?
     self.game.numCardsToMatch = 2;
 }
 
